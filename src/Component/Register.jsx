@@ -8,6 +8,7 @@ import { AuthContext } from "../Auth/AuthContext";
 import { useForm } from "react-hook-form";
 import axiosInstance from "../Api/axios";
 
+// Cartoon Character Animation
 const CartoonCharacterRegister = () => {
   const controls = useAnimation();
   useEffect(() => {
@@ -20,19 +21,19 @@ const CartoonCharacterRegister = () => {
   return (
     <motion.div
       animate={controls}
-      className="mx-auto mb-6 w-24 h-24 rounded-full bg-yellow-400 shadow-2xl flex items-center justify-center"
+      className="mx-auto mb-6 w-24 h-24 rounded-full bg-[#FFD93D] shadow-2xl flex items-center justify-center"
       title="Welcome! Register here"
     >
-      <div className="relative w-16 h-16 bg-pink-200 rounded-full flex items-center justify-center">
+      <div className="relative w-16 h-16 bg-[#FF6B6B] rounded-full flex items-center justify-center">
         <div className="flex justify-between w-10 absolute top-5 left-3">
-          <div className="w-3 h-3 bg-black rounded-full"></div>
-          <div className="w-3 h-3 bg-black rounded-full"></div>
+          <div className="w-3 h-3 bg-[#111111] rounded-full"></div>
+          <div className="w-3 h-3 bg-[#111111] rounded-full"></div>
         </div>
-        <div className="w-6 h-1 bg-black rounded-b-full absolute bottom-6 left-5"></div>
+        <div className="w-6 h-1 bg-[#111111] rounded-b-full absolute bottom-6 left-5"></div>
         <motion.div
           animate={{ rotate: [0, 20, -20, 20, 0] }}
           transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          className="w-6 h-6 bg-pink-500 rounded-full absolute top-1 right-0 shadow-lg"
+          className="w-6 h-6 bg-[#FF6B6B] rounded-full absolute top-1 right-0 shadow-lg"
           style={{ transformOrigin: "bottom center" }}
         />
       </div>
@@ -117,26 +118,27 @@ const Register = () => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-tr from-indigo-600 to-cyan-500 p-4 sm:p-6 transition-colors"
+      className="min-h-screen flex flex-col justify-center items-center 
+                 bg-gradient-to-tr from-[#FF6B6B] to-[#FFD93D] p-4 sm:p-6"
     >
       <CartoonCharacterRegister />
 
-      <div className="w-full max-w-md sm:max-w-lg md:max-w-xl bg-white dark:bg-[#1E293B] rounded-2xl shadow-2xl p-6 sm:p-8 text-gray-900 dark:text-white transition-colors">
-        <h2 className="text-3xl font-bold text-center mb-6 text-gray-900 dark:text-white">
+      <div className="w-full max-w-md sm:max-w-lg md:max-w-xl bg-[#FFFFFF] rounded-2xl shadow-2xl p-6 sm:p-8 text-[#111111] transition-colors">
+        <h2 className="text-3xl font-bold text-center mb-6 text-[#111111]">
           Register
         </h2>
 
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <input
-            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base transition-colors bg-white dark:bg-[#2D2F36] text-gray-900 dark:text-white"
+            className="w-full p-3 border border-[#111111]/20 rounded-lg focus:ring-2 focus:ring-[#FF6B6B] outline-none text-sm sm:text-base transition bg-[#FFFFFF] text-[#111111]"
             type="text"
             placeholder="Name"
             {...register("name", { required: "Name is required" })}
           />
-          {errors.name && <p className="text-red-600 text-xs sm:text-sm">{errors.name.message}</p>}
+          {errors.name && <p className="text-[#FF6B6B] text-xs sm:text-sm">{errors.name.message}</p>}
 
           <input
-            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base transition-colors bg-white dark:bg-[#2D2F36] text-gray-900 dark:text-white"
+            className="w-full p-3 border border-[#111111]/20 rounded-lg focus:ring-2 focus:ring-[#FF6B6B] outline-none text-sm sm:text-base transition bg-[#FFFFFF] text-[#111111]"
             type="email"
             placeholder="Email"
             {...register("email", {
@@ -144,26 +146,26 @@ const Register = () => {
               pattern: { value: /^\S+@\S+$/i, message: "Invalid email address" },
             })}
           />
-          {errors.email && <p className="text-red-600 text-xs sm:text-sm">{errors.email.message}</p>}
+          {errors.email && <p className="text-[#FF6B6B] text-xs sm:text-sm">{errors.email.message}</p>}
 
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Password"
-              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base transition-colors bg-white dark:bg-[#2D2F36] text-gray-900 dark:text-white"
+              className="w-full p-3 border border-[#111111]/20 rounded-lg focus:ring-2 focus:ring-[#FF6B6B] outline-none text-sm sm:text-base transition bg-[#FFFFFF] text-[#111111]"
               {...register("password", { required: "Password is required" })}
             />
             <span
               onClick={togglePassword}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 dark:text-gray-300 cursor-pointer"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#111111]/70 cursor-pointer"
             >
               {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
             </span>
-            {errors.password && <p className="text-red-600 text-xs sm:text-sm">{errors.password.message}</p>}
+            {errors.password && <p className="text-[#FF6B6B] text-xs sm:text-sm">{errors.password.message}</p>}
           </div>
 
           <input
-            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base transition-colors bg-white dark:bg-[#2D2F36] text-gray-900 dark:text-white"
+            className="w-full p-3 border border-[#111111]/20 rounded-lg focus:ring-2 focus:ring-[#FF6B6B] outline-none text-sm sm:text-base transition bg-[#FFFFFF] text-[#111111]"
             type="url"
             placeholder="Photo URL (Optional)"
             {...register("photoUrl")}
@@ -173,7 +175,7 @@ const Register = () => {
             type="submit"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="w-full bg-primary dark:bg-indigo-500 text-white py-3 rounded-lg font-semibold hover:opacity-90 transition text-sm sm:text-base"
+            className="w-full bg-[#FF6B6B] text-[#FFFFFF] py-3 rounded-lg font-semibold hover:bg-[#FFD93D] hover:text-[#111111] transition text-sm sm:text-base"
           >
             Register
           </motion.button>
@@ -183,15 +185,15 @@ const Register = () => {
           onClick={handleGoogleLogin}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="mt-4 w-full bg-white dark:bg-gray-700 text-darkText dark:text-white border p-3 rounded-lg flex items-center justify-center gap-2 shadow hover:shadow-lg transition font-semibold text-sm sm:text-base"
+          className="mt-4 w-full bg-[#FFFFFF] text-[#111111] border border-[#111111]/20 p-3 rounded-lg flex items-center justify-center gap-2 shadow hover:shadow-lg transition font-semibold text-sm sm:text-base"
         >
           <FcGoogle size={24} />
           Register with Google
         </motion.button>
 
-        <p className="mt-4 text-center text-gray-900 dark:text-white text-xs sm:text-sm">
+        <p className="mt-4 text-center text-[#111111] text-xs sm:text-sm">
           Already have an account?{" "}
-          <Link to="/login" className="text-primary dark:text-indigo-400 font-medium underline">
+          <Link to="/login" className="text-[#FF6B6B] font-medium hover:text-[#FFD93D] transition underline">
             Login here
           </Link>
         </p>

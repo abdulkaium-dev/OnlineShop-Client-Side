@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import axiosInstance from '../Api/axios';
-import Swal from 'sweetalert2';
+import React, { useEffect, useState } from "react";
+import axiosInstance from "../Api/axios";
+import Swal from "sweetalert2";
 
 const UpcomingProductsAdmin = () => {
   const [products, setProducts] = useState([]);
@@ -10,28 +10,28 @@ const UpcomingProductsAdmin = () => {
   const [publishingId, setPublishingId] = useState(null);
 
   const [formData, setFormData] = useState({
-    title: '',
-    category: '',
-    image: '',
-    ingredients: '',
-    description: '',
-    price: '',
-    publishDate: '',
-    distributorName: '',
+    title: "",
+    category: "",
+    image: "",
+    ingredients: "",
+    description: "",
+    price: "",
+    publishDate: "",
+    distributorName: "",
   });
 
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const res = await axiosInstance.get('/upcoming-products');
+      const res = await axiosInstance.get("/upcoming-products");
       if (Array.isArray(res.data)) {
         setProducts(res.data.sort((a, b) => (b.likes || 0) - (a.likes || 0)));
       } else {
-        Swal.fire('Error', 'Unexpected data from server', 'error');
+        Swal.fire("Error", "Unexpected data from server", "error");
       }
     } catch (err) {
       console.error(err);
-      Swal.fire('Error', 'Failed to fetch products', 'error');
+      Swal.fire("Error", "Failed to fetch products", "error");
     } finally {
       setLoading(false);
     }
@@ -50,40 +50,45 @@ const UpcomingProductsAdmin = () => {
     e.preventDefault();
     for (const key in formData) {
       if (!formData[key]) {
-        Swal.fire('Missing Field', `Please fill in ${key}`, 'error');
+        Swal.fire("Missing Field", `Please fill in ${key}`, "error");
         return;
       }
     }
     if (isNaN(formData.price) || Number(formData.price) <= 0) {
-      Swal.fire('Invalid Price', 'Price must be positive', 'error');
+      Swal.fire("Invalid Price", "Price must be positive", "error");
       return;
     }
     try {
       setAdding(true);
-      const res = await axiosInstance.post('/upcoming-products', {
+      const res = await axiosInstance.post("/upcoming-products", {
         ...formData,
         price: parseFloat(formData.price),
       });
       if (res.data.success) {
-        Swal.fire({ icon: 'success', title: 'product added', timer: 1500, showConfirmButton: false });
+        Swal.fire({
+          icon: "success",
+          title: "Product added successfully!",
+          timer: 1500,
+          showConfirmButton: false,
+        });
         setShowModal(false);
         setFormData({
-          title: '',
-          category: '',
-          image: '',
-          ingredients: '',
-          description: '',
-          price: '',
-          publishDate: '',
-          distributorName: '',
+          title: "",
+          category: "",
+          image: "",
+          ingredients: "",
+          description: "",
+          price: "",
+          publishDate: "",
+          distributorName: "",
         });
         fetchProducts();
       } else {
-        Swal.fire('Failed', 'Could not add product', 'error');
+        Swal.fire("Failed", "Could not add product", "error");
       }
     } catch (err) {
       console.error(err);
-      Swal.fire('Server Error', 'Could not add product', 'error');
+      Swal.fire("Server Error", "Could not add product", "error");
     } finally {
       setAdding(false);
     }
@@ -91,87 +96,107 @@ const UpcomingProductsAdmin = () => {
 
   const handlePublish = async (productId) => {
     const result = await Swal.fire({
-      title: 'Are you sure?',
-      text: 'Do you want to publish this product?',
-      icon: 'warning',
+      title: "Are you sure?",
+      text: "Do you want to publish this product?",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Yes, publish it!',
-      cancelButtonText: 'Cancel',
-      reverseButtons: true,
+      confirmButtonColor: "#FF6B6B",
+      cancelButtonColor: "#111111",
+      confirmButtonText: "Yes, publish it!",
     });
 
     if (!result.isConfirmed) return;
 
     try {
       setPublishingId(productId);
-      const res = await axiosInstance.post('/upcoming-products/publish', {
+      const res = await axiosInstance.post("/upcoming-products/publish", {
         productId,
-        addedByEmail: 'admin@example.com',
+        addedByEmail: "admin@example.com",
       });
 
       if (res.data.success) {
-        Swal.fire({ icon: 'success', title: 'Published!', timer: 1500, showConfirmButton: false });
+        Swal.fire({
+          icon: "success",
+          title: "Published!",
+          timer: 1500,
+          showConfirmButton: false,
+        });
         fetchProducts();
       } else {
-        Swal.fire('Failed', res.data.message || 'Could not publish product', 'error');
+        Swal.fire("Failed", res.data.message || "Could not publish product", "error");
       }
     } catch (err) {
       console.error(err);
-      Swal.fire('Failed', err.response?.data?.message || 'Server error', 'error');
+      Swal.fire("Failed", err.response?.data?.message || "Server error", "error");
     } finally {
       setPublishingId(null);
     }
   };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
-      <h1 className="text-3xl font-extrabold mb-6 text-gray-900 dark:text-white">Upcoming products Admin</h1>
+    <div className="p-6 max-w-7xl mx-auto min-h-screen bg-[#FFFFFF] text-[#111111] transition-colors">
+      <h1 className="text-3xl font-extrabold mb-6 text-center md:text-left">
+        Upcoming Products (Admin Panel)
+      </h1>
 
-      {/* Add Upcoming product Button */}
-      <button
-        onClick={() => setShowModal(true)}
-        className="mb-6 px-5 py-2 bg-indigo-600 text-white font-semibold rounded-md shadow-md hover:bg-indigo-700 transition"
-      >
-        + Add Upcoming product
-      </button>
+      {/* Add Button */}
+      <div className="flex justify-center md:justify-start">
+        <button
+          onClick={() => setShowModal(true)}
+          className="mb-6 px-6 py-2 bg-[#FF6B6B] text-white font-semibold rounded-lg shadow-md hover:bg-[#FFD93D] hover:text-[#111111] transition"
+        >
+          + Add Upcoming Product
+        </button>
+      </div>
 
-      {/* products Table */}
+      {/* Table Section */}
       {loading ? (
-        <p className="text-gray-900 dark:text-gray-100">Loading...</p>
+        <p className="text-center text-[#111111]">Loading...</p>
       ) : products.length === 0 ? (
-        <p className="text-gray-900 dark:text-gray-100">No upcoming products found</p>
+        <p className="text-center text-[#111111]">No upcoming products found</p>
       ) : (
-        <div className="overflow-x-auto border border-gray-300 dark:border-gray-700 rounded-lg shadow-md">
-          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-            <thead className="bg-gray-200 dark:bg-gray-800">
+        <div className="overflow-x-auto border border-gray-300 rounded-lg shadow-md">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-[#FFD93D]/30">
               <tr>
-                {['Title', 'Category', 'Likes', 'Publish Date', 'Distributor', 'Actions'].map((head) => (
-                  <th
-                    key={head}
-                    className="px-4 py-3 text-left text-gray-900 dark:text-gray-200 font-medium uppercase tracking-wider"
-                  >
-                    {head}
-                  </th>
-                ))}
+                {["Title", "Category", "Likes", "Publish Date", "Distributor", "Actions"].map(
+                  (head) => (
+                    <th
+                      key={head}
+                      className="px-4 py-3 text-left font-bold uppercase tracking-wide text-[#111111]"
+                    >
+                      {head}
+                    </th>
+                  )
+                )}
               </tr>
             </thead>
-            <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+            <tbody className="bg-white divide-y divide-gray-200">
               {products.map((product) => (
-                <tr key={product._id} className="hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-                  <td className="px-4 py-2 font-medium text-gray-900 dark:text-gray-100">{product.title}</td>
-                  <td className="px-4 py-2 text-gray-900 dark:text-gray-100">{product.category}</td>
-                  <td className="px-4 py-2 text-center text-gray-900 dark:text-gray-100 font-semibold">{product.likes || 0}</td>
-                  <td className="px-4 py-2 text-gray-900 dark:text-gray-100">{new Date(product.publishDate).toLocaleDateString()}</td>
-                  <td className="px-4 py-2 text-gray-900 dark:text-gray-100">{product.distributorName}</td>
+                <tr
+                  key={product._id}
+                  className="hover:bg-[#FFD93D]/20 transition duration-200"
+                >
+                  <td className="px-4 py-2 font-medium">{product.title}</td>
+                  <td className="px-4 py-2">{product.category}</td>
+                  <td className="px-4 py-2 text-center font-semibold">
+                    {product.likes || 0}
+                  </td>
+                  <td className="px-4 py-2">
+                    {new Date(product.publishDate).toLocaleDateString()}
+                  </td>
+                  <td className="px-4 py-2">{product.distributorName}</td>
                   <td className="px-4 py-2 text-center">
                     <button
                       disabled={publishingId === product._id}
                       onClick={() => handlePublish(product._id)}
                       className={`px-3 py-1 rounded-md text-white font-semibold transition ${
-                        publishingId === product._id ? 'bg-gray-400' : 'bg-indigo-600 hover:bg-indigo-700'
+                        publishingId === product._id
+                          ? "bg-gray-400"
+                          : "bg-[#FF6B6B] hover:bg-[#FFD93D] hover:text-[#111111]"
                       }`}
                     >
-                      {publishingId === product._id ? 'Publishing...' : 'Publish'}
+                      {publishingId === product._id ? "Publishing..." : "Publish"}
                     </button>
                   </td>
                 </tr>
@@ -183,20 +208,22 @@ const UpcomingProductsAdmin = () => {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 z-50">
-          <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-lg transition-colors">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">Add Upcoming product</h2>
+        <div className="fixed inset-0 bg-black/40 flex justify-center items-center p-4 z-50">
+          <div className="bg-[#FFFFFF] rounded-xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-lg">
+            <h2 className="text-2xl font-bold mb-4 text-[#111111]">Add Upcoming Product</h2>
             <form onSubmit={handleAddProduct} className="space-y-4">
               {Object.keys(formData).map((key) => (
                 <div key={key}>
-                  <label className="block mb-1 text-gray-900 dark:text-gray-100 capitalize">{key.replace(/([A-Z])/g, ' $1')}</label>
-                  {key === 'description' || key === 'ingredients' ? (
+                  <label className="block mb-1 text-[#111111] font-medium capitalize">
+                    {key.replace(/([A-Z])/g, " $1")}
+                  </label>
+                  {key === "description" || key === "ingredients" ? (
                     <textarea
                       name={key}
                       value={formData[key]}
                       onChange={handleChange}
                       rows={3}
-                      className="w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:focus:ring-indigo-500 transition bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-[#FF6B6B] transition"
                       required
                     />
                   ) : (
@@ -204,8 +231,14 @@ const UpcomingProductsAdmin = () => {
                       name={key}
                       value={formData[key]}
                       onChange={handleChange}
-                      type={key === 'price' ? 'number' : key === 'publishDate' ? 'date' : 'text'}
-                      className="w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:focus:ring-indigo-500 transition bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                      type={
+                        key === "price"
+                          ? "number"
+                          : key === "publishDate"
+                          ? "date"
+                          : "text"
+                      }
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-[#FF6B6B] transition"
                       required
                     />
                   )}
@@ -216,16 +249,16 @@ const UpcomingProductsAdmin = () => {
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-4 py-2 border border-gray-900 dark:border-gray-100 text-gray-900 dark:text-gray-100 font-semibold rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+                  className="px-4 py-2 border border-[#111111] text-[#111111] font-semibold rounded-md hover:bg-[#FFD93D]/40 transition"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={adding}
-                  className="px-4 py-2 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 transition"
+                  className="px-4 py-2 bg-[#FF6B6B] text-white font-semibold rounded-md hover:bg-[#FFD93D] hover:text-[#111111] transition"
                 >
-                  {adding ? 'Adding...' : 'Add product'}
+                  {adding ? "Adding..." : "Add Product"}
                 </button>
               </div>
             </form>

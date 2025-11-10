@@ -55,15 +55,18 @@ const AddProducts = () => {
       };
 
       const response = await axiosInstance.post(
-        `${import.meta.env.REACT_APP_API_BASE_URL || "https://online-shop-server-side.vercel.app"}/products`,
+        `${
+          import.meta.env.REACT_APP_API_BASE_URL ||
+          "https://online-shop-server-side.vercel.app"
+        }/products`,
         payload
       );
 
       if (response.data.success) {
-        Swal.fire("Success!", "product added successfully", "success");
+        Swal.fire("✅ Success!", "Product added successfully!", "success");
         reset();
       } else {
-        Swal.fire("Error", "Failed to add product", "error");
+        Swal.fire("❌ Error", "Failed to add product", "error");
       }
     } catch (error) {
       Swal.fire("Error", "Something went wrong. Please try again.", "error");
@@ -72,102 +75,116 @@ const AddProducts = () => {
     }
   };
 
-  // Common input/textarea styles
+  // Input and text styles
   const inputClass =
-    "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary " +
-    "bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 " +
-    "border-gray-300 dark:border-gray-600";
+    "w-full px-4 py-2 border rounded-lg bg-[#FFFFFF] text-[#111111] " +
+    "border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FFD93D] " +
+    "transition duration-200 shadow-sm";
 
-  const errorClass = "text-red-500 text-sm mt-1";
+  const errorClass = "text-[#FF6B6B] text-sm mt-1";
 
   return (
-    <div className="max-w-2xl mx-auto p-6 sm:p-8 bg-white dark:bg-gray-900 rounded-xl shadow-lg mt-10">
-      <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 text-center mb-8">
-        Add New product
+    <div className="max-w-2xl mx-auto p-6 sm:p-8 bg-[#FFFFFF] rounded-2xl shadow-xl mt-10 border border-gray-200">
+      <h2 className="text-3xl font-bold text-[#111111] text-center mb-8">
+        Add New Product
       </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Title */}
         <div>
-          <label className="block mb-2 font-semibold text-gray-900 dark:text-gray-100">
-            Title <span className="text-red-500">*</span>
+          <label className="block mb-2 font-semibold text-[#111111]">
+            Title <span className="text-[#FF6B6B]">*</span>
           </label>
           <input
             type="text"
             {...register("title", { required: "Title is required" })}
             placeholder="Enter product title"
-            className={`${inputClass} ${errors.title ? "border-red-500" : ""}`}
+            className={`${inputClass} ${errors.title ? "border-[#FF6B6B]" : ""}`}
           />
           {errors.title && <p className={errorClass}>{errors.title.message}</p>}
         </div>
 
         {/* Category */}
         <div>
-          <label className="block mb-2 font-semibold text-gray-900 dark:text-gray-100">
-            Category <span className="text-red-500">*</span>
+          <label className="block mb-2 font-semibold text-[#111111]">
+            Category <span className="text-[#FF6B6B]">*</span>
           </label>
           <select
             {...register("category", { required: "Category is required" })}
             defaultValue=""
-            className={`${inputClass} ${errors.category ? "border-red-500" : ""}`}
+            className={`${inputClass} ${errors.category ? "border-[#FF6B6B]" : ""}`}
           >
             <option value="" disabled>
               Select Category
             </option>
-            <option value="Breakfast">Electronics</option>
-            <option value="Lunch">Fashion</option>
-            <option value="Dinner">Footwear</option>
-            <option value="Snacks">Accessories</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Fashion">Fashion</option>
+            <option value="Footwear">Footwear</option>
+            <option value="Accessories">Accessories</option>
           </select>
-          {errors.category && <p className={errorClass}>{errors.category.message}</p>}
+          {errors.category && (
+            <p className={errorClass}>{errors.category.message}</p>
+          )}
         </div>
 
         {/* Image */}
         <div>
-          <label className="block mb-2 font-semibold text-gray-900 dark:text-gray-100">
-            Image <span className="text-red-500">*</span>
+          <label className="block mb-2 font-semibold text-[#111111]">
+            Image <span className="text-[#FF6B6B]">*</span>
           </label>
           <input
             type="file"
             accept="image/*"
             {...register("image", { required: "Image is required" })}
-            className="w-full text-gray-900 dark:text-gray-100"
+            className="w-full text-[#111111]"
           />
           {errors.image && <p className={errorClass}>{errors.image.message}</p>}
         </div>
 
         {/* Ingredients */}
         <div>
-          <label className="block mb-2 font-semibold text-gray-900 dark:text-gray-100">
-            Ingredients <span className="text-red-500">*</span>
+          <label className="block mb-2 font-semibold text-[#111111]">
+            Ingredients <span className="text-[#FF6B6B]">*</span>
           </label>
           <textarea
             rows={3}
-            {...register("ingredients", { required: "Ingredients are required" })}
+            {...register("ingredients", {
+              required: "Ingredients are required",
+            })}
             placeholder="Separate ingredients by commas"
-            className={`${inputClass} ${errors.ingredients ? "border-red-500" : ""}`}
+            className={`${inputClass} ${
+              errors.ingredients ? "border-[#FF6B6B]" : ""
+            }`}
           />
-          {errors.ingredients && <p className={errorClass}>{errors.ingredients.message}</p>}
+          {errors.ingredients && (
+            <p className={errorClass}>{errors.ingredients.message}</p>
+          )}
         </div>
 
         {/* Description */}
         <div>
-          <label className="block mb-2 font-semibold text-gray-900 dark:text-gray-100">
-            Description <span className="text-red-500">*</span>
+          <label className="block mb-2 font-semibold text-[#111111]">
+            Description <span className="text-[#FF6B6B]">*</span>
           </label>
           <textarea
             rows={4}
-            {...register("description", { required: "Description is required" })}
+            {...register("description", {
+              required: "Description is required",
+            })}
             placeholder="Describe the product"
-            className={`${inputClass} ${errors.description ? "border-red-500" : ""}`}
+            className={`${inputClass} ${
+              errors.description ? "border-[#FF6B6B]" : ""
+            }`}
           />
-          {errors.description && <p className={errorClass}>{errors.description.message}</p>}
+          {errors.description && (
+            <p className={errorClass}>{errors.description.message}</p>
+          )}
         </div>
 
         {/* Price */}
         <div>
-          <label className="block mb-2 font-semibold text-gray-900 dark:text-gray-100">
-            Price (USD) <span className="text-red-500">*</span>
+          <label className="block mb-2 font-semibold text-[#111111]">
+            Price (USD) <span className="text-[#FF6B6B]">*</span>
           </label>
           <input
             type="number"
@@ -177,44 +194,48 @@ const AddProducts = () => {
               min: { value: 0, message: "Price must be positive" },
             })}
             placeholder="Enter price in USD"
-            className={`${inputClass} ${errors.price ? "border-red-500" : ""}`}
+            className={`${inputClass} ${errors.price ? "border-[#FF6B6B]" : ""}`}
           />
           {errors.price && <p className={errorClass}>{errors.price.message}</p>}
         </div>
 
         {/* Post Time */}
         <div>
-          <label className="block mb-2 font-semibold text-gray-900 dark:text-gray-100">
-            Post Time <span className="text-red-500">*</span>
+          <label className="block mb-2 font-semibold text-[#111111]">
+            Post Time <span className="text-[#FF6B6B]">*</span>
           </label>
           <input
             type="datetime-local"
             {...register("postTime", { required: "Post time is required" })}
-            className={`${inputClass} ${errors.postTime ? "border-red-500" : ""}`}
+            className={`${inputClass} ${errors.postTime ? "border-[#FF6B6B]" : ""}`}
           />
-          {errors.postTime && <p className={errorClass}>{errors.postTime.message}</p>}
+          {errors.postTime && (
+            <p className={errorClass}>{errors.postTime.message}</p>
+          )}
         </div>
 
         {/* Distributor & Email */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block mb-2 font-semibold text-gray-900 dark:text-gray-100">
+            <label className="block mb-2 font-semibold text-[#111111]">
               Distributor Name
             </label>
             <input
               type="text"
               value={user.displayName || ""}
               readOnly
-              className="w-full px-4 py-2 border rounded-lg bg-gray-100 dark:bg-gray-800 cursor-not-allowed text-gray-900 dark:text-gray-100"
+              className="w-full px-4 py-2 border rounded-lg bg-gray-100 cursor-not-allowed text-[#111111]"
             />
           </div>
           <div>
-            <label className="block mb-2 font-semibold text-gray-900 dark:text-gray-100">Email</label>
+            <label className="block mb-2 font-semibold text-[#111111]">
+              Email
+            </label>
             <input
               type="email"
               value={user.email || ""}
               readOnly
-              className="w-full px-4 py-2 border rounded-lg bg-gray-100 dark:bg-gray-800 cursor-not-allowed text-gray-900 dark:text-gray-100"
+              className="w-full px-4 py-2 border rounded-lg bg-gray-100 cursor-not-allowed text-[#111111]"
             />
           </div>
         </div>
@@ -223,13 +244,14 @@ const AddProducts = () => {
         <button
           type="submit"
           disabled={isSubmitting || uploading}
-          className={`w-full py-3 rounded-lg font-semibold text-white transition-colors duration-200
-            ${isSubmitting || uploading
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-primary hover:bg-primary/90 dark:bg-indigo-600 dark:hover:bg-indigo-500"}
-          `}
+          className={`w-full py-3 rounded-lg font-semibold text-white transition-all duration-300 shadow-md
+            ${
+              isSubmitting || uploading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-[#FF6B6B] hover:bg-[#FFD93D] hover:text-[#111111]"
+            }`}
         >
-          {uploading ? "Uploading..." : "Add product"}
+          {uploading ? "Uploading..." : "Add Product"}
         </button>
       </form>
     </div>

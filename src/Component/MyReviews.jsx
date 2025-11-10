@@ -32,7 +32,6 @@ const MyReviews = () => {
         if (!currentUser) return;
 
         const token = await currentUser.getIdToken();
-
         const res = await axiosInstance.get(`/my-reviews/${user.email}`, {
           headers: { Authorization: `Bearer ${token}` },
           params: { page, limit: ITEMS_PER_PAGE },
@@ -58,8 +57,8 @@ const MyReviews = () => {
       text: "Do you really want to delete this review?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#4F46E5",
-      cancelButtonColor: "#06B6D4",
+      confirmButtonColor: "#FF6B6B", // Primary Accent
+      cancelButtonColor: "#FFD93D",  // Secondary Accent
       confirmButtonText: "Yes, delete it!",
       cancelButtonText: "No, keep it",
     }).then((result) => {
@@ -90,73 +89,67 @@ const MyReviews = () => {
 
   if (loading)
     return (
-      <div className="p-6 text-gray-700 dark:text-gray-300 text-center">
+      <div className="p-6 text-[#111111]/70 text-center">
         Loading your reviews...
       </div>
     );
 
   if (reviews.length === 0)
     return (
-      <div className="p-6 text-gray-700 dark:text-gray-300 text-center">
+      <div className="p-6 text-[#111111]/70 text-center">
         You haven't posted any reviews yet.
       </div>
     );
 
   return (
     <div className="p-4 max-w-7xl mx-auto min-h-screen">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100 text-center md:text-left">
+      <h2 className="text-2xl font-bold mb-6 text-[#111111] text-center md:text-left">
         My Reviews
       </h2>
 
-      <div className="overflow-x-auto rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
-        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-          <thead className="bg-gray-100 dark:bg-gray-700">
+      <div className="overflow-x-auto rounded-xl shadow-lg border border-[#111111]/20 bg-[#FFFFFF] dark:bg-[#111111] transition-colors">
+        <table className="min-w-full divide-y divide-[#111111]/20">
+          <thead className="bg-[#FFD93D]/20 dark:bg-[#FFD93D]/10">
             <tr>
-              <th className="py-3 px-4 text-left text-sm font-semibold text-gray-800 dark:text-gray-200">
+              <th className="py-3 px-4 text-left text-sm font-semibold text-[#111111] dark:text-[#FFFFFF]">
                 Product Title
               </th>
-              <th className="py-3 px-4 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
+              <th className="py-3 px-4 text-center text-sm font-semibold text-[#111111] dark:text-[#FFFFFF]">
                 Likes
               </th>
-              <th className="py-3 px-4 text-left text-sm font-semibold text-gray-800 dark:text-gray-200">
+              <th className="py-3 px-4 text-left text-sm font-semibold text-[#111111] dark:text-[#FFFFFF]">
                 Review
               </th>
-              <th className="py-3 px-4 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
+              <th className="py-3 px-4 text-center text-sm font-semibold text-[#111111] dark:text-[#FFFFFF]">
                 Actions
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+          <tbody className="divide-y divide-[#111111]/20">
             {reviews.map(({ _id, productTitle, likes = 0, comment, productId }) => (
               <tr
                 key={_id}
-                className="hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                className="hover:bg-[#FFD93D]/10 dark:hover:bg-[#FFD93D]/20 transition-colors"
               >
-                <td className="py-3 px-4 text-sm text-gray-800 dark:text-gray-200">
-                  {productTitle}
-                </td>
-                <td className="py-3 px-4 text-center text-sm text-gray-600 dark:text-gray-400">
-                  {likes}
-                </td>
-                <td className="py-3 px-4 text-sm text-gray-600 dark:text-gray-400 max-w-xs break-words">
-                  {comment}
-                </td>
+                <td className="py-3 px-4 text-sm text-[#111111] dark:text-[#FFFFFF]">{productTitle}</td>
+                <td className="py-3 px-4 text-center text-sm text-[#111111]/70 dark:text-[#FFFFFF]/70">{likes}</td>
+                <td className="py-3 px-4 text-sm text-[#111111]/70 dark:text-[#FFFFFF]/70 max-w-xs break-words">{comment}</td>
                 <td className="py-3 px-4 text-center text-sm flex flex-wrap justify-center gap-2">
                   <button
                     onClick={() => navigate(`/dashboard/edit-review/${_id}`)}
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded text-xs md:text-sm transition"
+                    className="bg-[#FF6B6B] hover:bg-[#FFD93D] text-[#FFFFFF] px-3 py-1 rounded text-xs md:text-sm transition"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDelete(_id)}
-                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs md:text-sm transition"
+                    className="bg-[#FF6B6B] hover:bg-[#FFD93D] text-[#FFFFFF] px-3 py-1 rounded text-xs md:text-sm transition"
                   >
                     Delete
                   </button>
                   <button
                     onClick={() => navigate(`/product/${productId}`)}
-                    className="bg-cyan-600 hover:bg-cyan-700 text-white px-3 py-1 rounded text-xs md:text-sm transition"
+                    className="bg-[#FF6B6B] hover:bg-[#FFD93D] text-[#FFFFFF] px-3 py-1 rounded text-xs md:text-sm transition"
                   >
                     View Product
                   </button>
@@ -172,17 +165,17 @@ const MyReviews = () => {
         <button
           onClick={() => goToPage(currentPage - 1)}
           disabled={currentPage === 1}
-          className="px-3 py-1 rounded border border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition"
+          className="px-3 py-1 rounded border border-[#111111]/20 text-[#111111] dark:text-[#FFFFFF] hover:bg-[#FFD93D]/20 dark:hover:bg-[#FFD93D]/10 disabled:opacity-50 disabled:cursor-not-allowed transition"
         >
           Previous
         </button>
-        <span className="px-3 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+        <span className="px-3 py-1 rounded border border-[#111111]/20 bg-[#FFFFFF] dark:bg-[#111111] text-[#111111] dark:text-[#FFFFFF]">
           Page {currentPage} of {totalPages}
         </span>
         <button
           onClick={() => goToPage(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="px-3 py-1 rounded border border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition"
+          className="px-3 py-1 rounded border border-[#111111]/20 text-[#111111] dark:text-[#FFFFFF] hover:bg-[#FFD93D]/20 dark:hover:bg-[#FFD93D]/10 disabled:opacity-50 disabled:cursor-not-allowed transition"
         >
           Next
         </button>

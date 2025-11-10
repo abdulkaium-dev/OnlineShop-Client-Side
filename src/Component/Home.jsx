@@ -2,10 +2,10 @@ import React from 'react';
 import Slider from './Slider';
 import FeaturesSection from './FeaturesSection';
 import MembershipSection from './MembershipSection';
-import MealsTabs from './MealsTabs';
 import SalesPromotion from './SalesPromotion';
 import Promotion from './Promotion';
 import CustomerReviews from './CustomerReviews';
+import ProductsTabs from './ProductsTabs';
 
 const Home = () => {
     return (
@@ -14,7 +14,7 @@ const Home = () => {
                 <Slider />                    {/* Hero section */}
             </div>
              <div className="my-10">
-                <MealsTabs />                {/* Meal categories */}
+                <ProductsTabs/>            {/* Meal categories */}
             </div>
             <div className="my-10">
                 <SalesPromotion />            {/* Limited-time offer */}

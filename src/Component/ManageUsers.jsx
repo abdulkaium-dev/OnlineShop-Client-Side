@@ -6,7 +6,6 @@ const ManageUsers = () => {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
-
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
   const [total, setTotal] = useState(0);
@@ -36,7 +35,7 @@ const ManageUsers = () => {
       text: `Are you sure you want to make ${email} an admin?`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#4F46E5",
+      confirmButtonColor: "#FF6B6B",
       cancelButtonColor: "#6c757d",
       confirmButtonText: "Yes, make admin!",
     });
@@ -60,62 +59,87 @@ const ManageUsers = () => {
   const totalPages = Math.ceil(total / limit);
 
   return (
-    <div className="p-6 max-w-7xl mx-auto bg-gray-50 dark:bg-gray-900 rounded-lg shadow-md mt-10 transition-colors duration-300">
-      <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100 text-center md:text-left">
+    <div className="p-6 sm:p-8 max-w-7xl mx-auto bg-[#FFFFFF] rounded-2xl shadow-md mt-10 transition-all duration-300">
+      {/* Header */}
+      <h2 className="text-3xl font-bold mb-6 text-[#111111] text-center md:text-left border-b-2 border-[#FF6B6B]/40 pb-2">
         Manage Users
       </h2>
 
+      {/* Search Bar */}
       <input
         type="text"
-        placeholder="Search by name or email"
+        placeholder="🔍 Search by name or email"
         value={search}
         onChange={(e) => {
           setSearch(e.target.value);
           setPage(1);
         }}
-        className="mb-4 px-4 py-2 border rounded-md w-full max-w-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100 transition"
+        className="mb-6 px-4 py-2 border border-[#111111]/20 rounded-lg w-full max-w-sm focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] bg-[#FFFFFF] text-[#111111] placeholder-gray-400"
       />
 
+      {/* Table */}
       {loading ? (
-        <p className="text-center text-gray-700 dark:text-gray-300 py-6">
-          Loading users...
-        </p>
+        <p className="text-center text-[#111111]/70 py-8">Loading users...</p>
       ) : (
         <>
-          <div className="overflow-x-auto rounded-lg shadow border border-gray-200 dark:border-gray-700">
-            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700 table-auto">
-              <thead className="bg-indigo-600 text-white">
+          <div className="overflow-x-auto rounded-xl border border-[#111111]/10 shadow-sm">
+            <table className="min-w-full divide-y divide-[#111111]/10">
+              <thead className="bg-[#FF6B6B] text-white">
                 <tr>
-                  <th className="px-4 py-3 text-left text-sm font-semibold whitespace-nowrap">#</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold whitespace-nowrap">Username</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold whitespace-nowrap">Email</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold whitespace-nowrap">Subscription</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold whitespace-nowrap">Role</th>
-                  <th className="px-4 py-3 text-center text-sm font-semibold whitespace-nowrap">Action</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold">#</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold">Username</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold">Email</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold">Subscription</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold">Role</th>
+                  <th className="px-4 py-3 text-center text-sm font-semibold">Action</th>
                 </tr>
               </thead>
-              <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+
+              <tbody className="bg-[#FFFFFF] divide-y divide-[#111111]/10">
                 {users.length === 0 ? (
                   <tr>
-                    <td colSpan="6" className="text-center py-6 text-gray-600 dark:text-gray-400">
+                    <td colSpan="6" className="text-center py-6 text-[#111111]/60">
                       No users found
                     </td>
                   </tr>
                 ) : (
                   users.map((user, idx) => (
-                    <tr key={user._id} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition">
-                      <td className="px-4 py-2 text-sm text-gray-900 dark:text-gray-100 whitespace-nowrap">{(page - 1) * limit + idx + 1}</td>
-                      <td className="px-4 py-2 text-sm text-gray-900 dark:text-gray-100 whitespace-nowrap">{user.displayName || "N/A"}</td>
-                      <td className="px-4 py-2 text-sm text-gray-900 dark:text-gray-100 whitespace-nowrap">{user.email}</td>
-                      <td className="px-4 py-2 text-sm text-gray-900 dark:text-gray-100 whitespace-nowrap">{user.badge || "Bronze"}</td>
-                      <td className="px-4 py-2 text-sm text-gray-900 dark:text-gray-100 whitespace-nowrap">{user.role}</td>
-                      <td className="px-4 py-2 text-center text-sm whitespace-nowrap">
+                    <tr
+                      key={user._id}
+                      className="hover:bg-[#FFD93D]/10 transition-colors duration-200"
+                    >
+                      <td className="px-4 py-3 text-sm text-[#111111] whitespace-nowrap">
+                        {(page - 1) * limit + idx + 1}
+                      </td>
+                      <td className="px-4 py-3 text-sm text-[#111111] whitespace-nowrap">
+                        {user.displayName || "N/A"}
+                      </td>
+                      <td className="px-4 py-3 text-sm text-[#111111] whitespace-nowrap">
+                        {user.email}
+                      </td>
+                      <td className="px-4 py-3 text-sm font-medium whitespace-nowrap">
+                        <span
+                          className={`px-3 py-1 rounded-full text-[#111111] font-semibold ${
+                            user.badge === "Gold"
+                              ? "bg-[#FFD93D]"
+                              : user.badge === "Silver"
+                              ? "bg-gray-300"
+                              : "bg-[#FF6B6B]/20"
+                          }`}
+                        >
+                          {user.badge || "Bronze"}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-sm text-[#111111] whitespace-nowrap capitalize">
+                        {user.role}
+                      </td>
+                      <td className="px-4 py-3 text-center whitespace-nowrap">
                         {user.role === "admin" ? (
-                          <span className="text-green-500 font-semibold">Admin</span>
+                          <span className="text-green-600 font-semibold">Admin</span>
                         ) : (
                           <button
                             onClick={() => makeAdmin(user._id, user.email)}
-                            className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded-md transition"
+                            className="bg-[#FF6B6B] hover:bg-[#FFD93D] hover:text-[#111111] text-white px-4 py-1.5 rounded-md font-medium transition-all duration-200 shadow-sm"
                           >
                             Make Admin
                           </button>
@@ -130,11 +154,11 @@ const ManageUsers = () => {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="mt-4 flex flex-col sm:flex-row justify-center items-center gap-3 text-sm text-gray-700 dark:text-gray-300">
+            <div className="mt-6 flex flex-col sm:flex-row justify-center items-center gap-3 text-[#111111]/80 text-sm">
               <button
                 disabled={page === 1}
                 onClick={() => setPage((p) => Math.max(p - 1, 1))}
-                className="px-4 py-2 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-50 transition"
+                className="px-4 py-2 bg-[#FFFFFF] border border-[#111111]/20 rounded-md hover:bg-[#FFD93D]/20 disabled:opacity-50 transition-all"
               >
                 Prev
               </button>
@@ -144,7 +168,7 @@ const ManageUsers = () => {
               <button
                 disabled={page === totalPages}
                 onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
-                className="px-4 py-2 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-50 transition"
+                className="px-4 py-2 bg-[#FFFFFF] border border-[#111111]/20 rounded-md hover:bg-[#FFD93D]/20 disabled:opacity-50 transition-all"
               >
                 Next
               </button>

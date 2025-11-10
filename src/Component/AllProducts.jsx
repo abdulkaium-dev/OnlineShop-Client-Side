@@ -11,12 +11,11 @@ const AllProducts = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
   const [sortBy, setSortBy] = useState("likes");
   const [order, setOrder] = useState("desc");
-
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
+
   const limit = 10;
   const totalPages = Math.ceil(total / limit);
 
@@ -45,8 +44,8 @@ const AllProducts = () => {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#06B6D4",
+      confirmButtonColor: "#FF6B6B",
+      cancelButtonColor: "#FFD93D",
       confirmButtonText: "Yes, delete it!",
     });
 
@@ -63,22 +62,26 @@ const AllProducts = () => {
         Swal.fire("Error", res.data.message || "Deletion failed", "error");
       }
     } catch (err) {
-      Swal.fire("Error", err?.response?.data?.message || "Failed to delete product.", "error");
+      Swal.fire(
+        "Error",
+        err?.response?.data?.message || "Failed to delete product.",
+        "error"
+      );
     }
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6 sm:p-8 bg-gray-50 dark:bg-gray-900 rounded-xl shadow-lg mt-10 transition-colors duration-300">
-      <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 text-center mb-8">
-        All products
+    <div className="max-w-6xl mx-auto p-6 sm:p-8 bg-[#FFFFFF] rounded-2xl shadow-xl mt-10 border border-gray-200 transition-colors duration-300">
+      <h2 className="text-3xl font-bold text-[#111111] text-center mb-8">
+        All Products
       </h2>
 
       {/* Sorting Controls */}
-      <div className="flex flex-wrap justify-center gap-4 mb-8 text-gray-800 dark:text-gray-100 font-semibold">
+      <div className="flex flex-wrap justify-center gap-4 mb-8 text-[#111111] font-semibold">
         <label className="flex items-center space-x-2">
           <span>Sort by:</span>
           <select
-            className="border border-gray-300 dark:border-gray-600 rounded-md px-3 py-1 focus:outline-none focus:ring-2 focus:ring-[#06B6D4] bg-white dark:bg-gray-800 dark:text-gray-100"
+            className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring-2 focus:ring-[#FFD93D] bg-[#FFFFFF] text-[#111111] transition"
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
           >
@@ -91,7 +94,7 @@ const AllProducts = () => {
         <label className="flex items-center space-x-2">
           <span>Order:</span>
           <select
-            className="border border-gray-300 dark:border-gray-600 rounded-md px-3 py-1 focus:outline-none focus:ring-2 focus:ring-[#06B6D4] bg-white dark:bg-gray-800 dark:text-gray-100"
+            className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring-2 focus:ring-[#FFD93D] bg-[#FFFFFF] text-[#111111] transition"
             value={order}
             onChange={(e) => setOrder(e.target.value)}
           >
@@ -101,20 +104,25 @@ const AllProducts = () => {
         </label>
       </div>
 
-      {loading && <p className="text-center text-gray-600 dark:text-gray-300 py-8">Loading products...</p>}
-      {error && <p className="text-center text-red-600 py-8 font-semibold">{error}</p>}
+      {loading && (
+        <p className="text-center text-[#111111]/70 py-8">Loading products...</p>
+      )}
+      {error && (
+        <p className="text-center text-[#FF6B6B] py-8 font-semibold">{error}</p>
+      )}
       {!loading && products.length === 0 && (
-        <p className="text-center italic text-gray-600 dark:text-gray-300 py-8">No products found.</p>
+        <p className="text-center italic text-[#111111]/70 py-8">
+          No products found.
+        </p>
       )}
 
-      {/* Table / Cards */}
+      {/* Table View (Desktop) */}
       {!loading && products.length > 0 && (
         <>
-          {/* Desktop Table */}
-          <div className="hidden md:block overflow-x-auto rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+          <div className="hidden md:block overflow-x-auto rounded-lg shadow border border-gray-200 bg-[#FFFFFF]">
             <table className="w-full min-w-[700px] table-auto border-collapse">
               <thead>
-                <tr className="bg-indigo-600 dark:bg-indigo-700 text-white select-none">
+                <tr className="bg-[#FF6B6B] text-white select-none">
                   <th className="px-4 py-3 text-left">Title</th>
                   <th className="px-4 py-3 text-center">Likes</th>
                   <th className="px-4 py-3 text-center">Reviews</th>
@@ -129,31 +137,43 @@ const AllProducts = () => {
                     key={product._id}
                     className={
                       i % 2 === 0
-                        ? "bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600"
-                        : "bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-600"
+                        ? "bg-[#FFFFFF] hover:bg-[#FFD93D]/10 transition"
+                        : "bg-[#FFF7E1] hover:bg-[#FFD93D]/10 transition"
                     }
                   >
-                    <td className="px-4 py-3 text-gray-800 dark:text-gray-100 font-medium">{product.title}</td>
-                    <td className="px-4 py-3 text-center text-gray-800 dark:text-gray-100">{product.likes}</td>
-                    <td className="px-4 py-3 text-center text-gray-800 dark:text-gray-100">{product.reviewCount}</td>
-                    <td className="px-4 py-3 text-center text-gray-800 dark:text-gray-100">{product.rating?.toFixed(1) ?? "N/A"}</td>
-                    <td className="px-4 py-3 text-gray-800 dark:text-gray-100">{product.distributorName || "N/A"}</td>
+                    <td className="px-4 py-3 text-[#111111] font-medium">
+                      {product.title}
+                    </td>
+                    <td className="px-4 py-3 text-center text-[#111111]">
+                      {product.likes}
+                    </td>
+                    <td className="px-4 py-3 text-center text-[#111111]">
+                      {product.reviewCount}
+                    </td>
+                    <td className="px-4 py-3 text-center text-[#111111]">
+                      {product.rating?.toFixed(1) ?? "N/A"}
+                    </td>
+                    <td className="px-4 py-3 text-[#111111]">
+                      {product.distributorName || "N/A"}
+                    </td>
                     <td className="px-4 py-3 text-center space-x-2">
                       <button
-                        onClick={() => navigate(`/dashboard/products/update/${product._id}`)}
-                        className="bg-primary hover:bg-primary/90 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition"
+                        onClick={() =>
+                          navigate(`/dashboard/products/update/${product._id}`)
+                        }
+                        className="bg-[#FF6B6B] hover:bg-[#FFD93D] hover:text-[#111111] text-white px-3 py-1 rounded-md text-xs sm:text-sm font-semibold transition-all duration-300"
                       >
                         Update
                       </button>
                       <button
                         onClick={() => navigate(`/product/${product._id}`)}
-                        className="bg-secondary hover:bg-secondary/90 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition"
+                        className="bg-[#FFD93D] hover:bg-[#FF6B6B] hover:text-white text-[#111111] px-3 py-1 rounded-md text-xs sm:text-sm font-semibold transition-all duration-300"
                       >
                         View
                       </button>
                       <button
                         onClick={() => handleDelete(product._id)}
-                        className="border-2 border-red-500 text-red-500 hover:bg-red-50 dark:hover:bg-red-700/20 px-3 py-1 rounded-md text-xs sm:text-sm transition"
+                        className="border-2 border-[#FF6B6B] text-[#FF6B6B] hover:bg-[#FF6B6B]/10 px-3 py-1 rounded-md text-xs sm:text-sm font-semibold transition-all duration-300"
                       >
                         Delete
                       </button>
@@ -164,44 +184,58 @@ const AllProducts = () => {
             </table>
           </div>
 
-          {/* Mobile Cards */}
+          {/* Mobile Card View */}
           <div className="md:hidden space-y-4">
             {products.map((product) => (
               <div
                 key={product._id}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow p-4 border border-gray-200 dark:border-gray-700"
+                className="bg-[#FFFFFF] rounded-xl shadow-lg border border-gray-200 p-4"
               >
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">{product.title}</h3>
-                <div className="grid grid-cols-2 gap-2 text-sm text-gray-600 dark:text-gray-300 mb-3">
+                <h3 className="text-lg font-semibold text-[#111111] mb-2">
+                  {product.title}
+                </h3>
+                <div className="grid grid-cols-2 gap-2 text-sm text-[#111111]/80 mb-3">
                   <div>
-                    <span className="font-semibold text-gray-800 dark:text-gray-100">Likes:</span> {product.likes}
+                    <span className="font-semibold text-[#111111]">Likes:</span>{" "}
+                    {product.likes}
                   </div>
                   <div>
-                    <span className="font-semibold text-gray-800 dark:text-gray-100">Reviews:</span> {product.reviewCount}
+                    <span className="font-semibold text-[#111111]">
+                      Reviews:
+                    </span>{" "}
+                    {product.reviewCount}
                   </div>
                   <div>
-                    <span className="font-semibold text-gray-800 dark:text-gray-100">Rating:</span> {product.rating?.toFixed(1) ?? "N/A"}
+                    <span className="font-semibold text-[#111111]">
+                      Rating:
+                    </span>{" "}
+                    {product.rating?.toFixed(1) ?? "N/A"}
                   </div>
                   <div>
-                    <span className="font-semibold text-gray-800 dark:text-gray-100">Distributor:</span> {product.distributorName || "N/A"}
+                    <span className="font-semibold text-[#111111]">
+                      Distributor:
+                    </span>{" "}
+                    {product.distributorName || "N/A"}
                   </div>
                 </div>
                 <div className="flex justify-between space-x-2">
                   <button
-                    onClick={() => navigate(`/dashboard/products/update/${product._id}`)}
-                    className="flex-1 bg-primary hover:bg-primary/90 text-white px-3 py-2 rounded-lg text-xs font-semibold transition"
+                    onClick={() =>
+                      navigate(`/dashboard/products/update/${product._id}`)
+                    }
+                    className="flex-1 bg-[#FF6B6B] hover:bg-[#FFD93D] hover:text-[#111111] text-white px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-300"
                   >
                     Update
                   </button>
                   <button
                     onClick={() => navigate(`/product/${product._id}`)}
-                    className="flex-1 bg-secondary hover:bg-secondary/90 text-white px-3 py-2 rounded-lg text-xs font-semibold transition"
+                    className="flex-1 bg-[#FFD93D] hover:bg-[#FF6B6B] hover:text-white text-[#111111] px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-300"
                   >
                     View
                   </button>
                   <button
                     onClick={() => handleDelete(product._id)}
-                    className="flex-1 border-2 border-red-500 text-red-500 hover:bg-red-50 dark:hover:bg-red-700/20 px-3 py-2 rounded-lg text-xs font-semibold transition"
+                    className="flex-1 border-2 border-[#FF6B6B] text-[#FF6B6B] hover:bg-[#FF6B6B]/10 px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-300"
                   >
                     Delete
                   </button>
@@ -217,24 +251,24 @@ const AllProducts = () => {
         <button
           onClick={() => setPage((p) => Math.max(p - 1, 1))}
           disabled={page === 1}
-          className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
+          className={`px-4 py-2 rounded-lg border-2 font-semibold transition-all duration-300 ${
             page === 1
-              ? "border-2 border-gray-300 text-gray-400 cursor-not-allowed"
-              : "border-2 border-primary text-primary hover:bg-primary/10"
+              ? "border-gray-300 text-gray-400 cursor-not-allowed"
+              : "border-[#FF6B6B] text-[#FF6B6B] hover:bg-[#FFD93D]/20"
           }`}
         >
           Prev
         </button>
-        <span className="font-semibold text-gray-800 dark:text-gray-100">
+        <span className="font-semibold text-[#111111]">
           Page {page} of {totalPages}
         </span>
         <button
           onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
           disabled={page >= totalPages}
-          className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
+          className={`px-4 py-2 rounded-lg border-2 font-semibold transition-all duration-300 ${
             page >= totalPages
-              ? "border-2 border-gray-300 text-gray-400 cursor-not-allowed"
-              : "border-2 border-primary text-primary hover:bg-primary/10"
+              ? "border-gray-300 text-gray-400 cursor-not-allowed"
+              : "border-[#FF6B6B] text-[#FF6B6B] hover:bg-[#FFD93D]/20"
           }`}
         >
           Next

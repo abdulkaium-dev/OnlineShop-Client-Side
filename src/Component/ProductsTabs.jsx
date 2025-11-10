@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from "../Api/axios";
 import { getAuth } from "firebase/auth";
 
-// Online shop categories
 const categories = ['All', 'Electronics', 'Fashion', 'Footwear', 'Accessories'];
 
 const ProductsTabs = () => {
@@ -12,7 +11,6 @@ const ProductsTabs = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Fetch products
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
@@ -38,7 +36,7 @@ const ProductsTabs = () => {
   }, [activeTab]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-500">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 min-h-screen bg-[#FFFFFF] transition-colors duration-500">
 
       {/* Category Tabs */}
       <div className="flex flex-wrap justify-center gap-3 mb-8">
@@ -48,8 +46,8 @@ const ProductsTabs = () => {
             onClick={() => setActiveTab(cat)}
             className={`px-5 py-2 sm:px-6 sm:py-3 text-sm sm:text-base font-semibold rounded-full transition duration-300
               ${activeTab === cat
-                ? 'bg-indigo-600 text-white shadow-lg dark:bg-indigo-500 dark:text-gray-100'
-                : 'bg-white text-indigo-600 border border-indigo-600 hover:bg-cyan-400/20 hover:text-gray-900 dark:bg-gray-800 dark:text-indigo-400 dark:border-indigo-500 dark:hover:bg-cyan-600/30 dark:hover:text-white'
+                ? 'bg-[#FF6B6B] text-[#FFFFFF] shadow-lg'
+                : 'bg-[#FFFFFF] text-[#111111] border border-[#FF6B6B] hover:bg-[#FFD93D]/20 hover:text-[#111111]'
               }`}
           >
             {cat}
@@ -61,13 +59,13 @@ const ProductsTabs = () => {
       {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {Array.from({ length: 6 }).map((_, idx) => (
-            <div key={idx} className="flex flex-col h-full rounded-xl overflow-hidden shadow-lg bg-white dark:bg-gray-800 animate-pulse">
-              <div className="h-48 sm:h-52 md:h-56 w-full bg-gray-200 dark:bg-gray-700"></div>
+            <div key={idx} className="flex flex-col h-full rounded-xl overflow-hidden shadow-lg bg-[#FFFFFF] animate-pulse">
+              <div className="h-48 sm:h-52 md:h-56 w-full bg-gray-200"></div>
               <div className="flex flex-col flex-grow p-5 space-y-3">
-                <div className="h-6 bg-gray-300 dark:bg-gray-600 rounded w-3/4"></div>
-                <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-full"></div>
-                <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-full"></div>
-                <div className="h-6 bg-gray-300 dark:bg-gray-600 rounded w-1/4 mt-auto"></div>
+                <div className="h-6 bg-gray-300 rounded w-3/4"></div>
+                <div className="h-4 bg-gray-300 rounded w-full"></div>
+                <div className="h-4 bg-gray-300 rounded w-full"></div>
+                <div className="h-6 bg-gray-300 rounded w-1/4 mt-auto"></div>
               </div>
             </div>
           ))}
@@ -75,7 +73,7 @@ const ProductsTabs = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.length === 0 && (
-            <p className="text-center col-span-full text-gray-700 dark:text-gray-300 font-medium">
+            <p className="text-center col-span-full text-[#111111] font-medium">
               No products available in this category.
             </p>
           )}
@@ -83,7 +81,7 @@ const ProductsTabs = () => {
           {products.map((product) => (
             <div
               key={product._id}
-              className="flex flex-col h-full rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition bg-white dark:bg-gray-800 dark:text-gray-100"
+              className="flex flex-col h-full rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition bg-[#FFFFFF] text-[#111111]"
             >
               {/* Image */}
               <div className="h-48 sm:h-52 md:h-56 w-full overflow-hidden">
@@ -100,17 +98,17 @@ const ProductsTabs = () => {
                   {product.title}
                 </h2>
 
-                <p className="text-sm sm:text-base mt-2 line-clamp-3 flex-grow text-gray-600 dark:text-gray-300">
+                <p className="text-sm sm:text-base mt-2 line-clamp-3 flex-grow text-[#111111]/70">
                   {product.description || 'No description available.'}
                 </p>
 
-                <p className="font-bold mt-2 text-indigo-600 dark:text-indigo-400">
+                <p className="font-bold mt-2 text-[#FF6B6B]">
                   ${product.price?.toFixed(2) || '0.00'}
                 </p>
 
                 <button
                   onClick={() => navigate(`/product/${product._id}`)}
-                  className="mt-auto bg-indigo-600 text-white hover:bg-cyan-400 hover:text-gray-900 py-2 sm:py-3 rounded-md font-semibold transition text-sm sm:text-base dark:bg-indigo-500 dark:text-gray-100 dark:hover:bg-cyan-600 dark:hover:text-white"
+                  className="mt-auto bg-[#FF6B6B] text-[#FFFFFF] hover:bg-[#FFD93D] hover:text-[#111111] py-2 sm:py-3 rounded-md font-semibold transition text-sm sm:text-base"
                 >
                   See More
                 </button>

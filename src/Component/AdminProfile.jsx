@@ -15,7 +15,7 @@ export const AdminProfile = () => {
       setError(null);
       try {
         const res = await fetch(
-          `http://localhost:5000/admin/profile/${user.email}`
+          `https://online-shop-server-side.vercel.app/admin/profile/${user.email}`
         );
         if (!res.ok) {
           const errorData = await res.json();

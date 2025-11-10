@@ -55,7 +55,7 @@ const AddProducts = () => {
       };
 
       const response = await axiosInstance.post(
-        `${import.meta.env.REACT_APP_API_BASE_URL || "http://localhost:5000"}/products`,
+        `${import.meta.env.REACT_APP_API_BASE_URL || "https://online-shop-server-side.vercel.app"}/products`,
         payload
       );
 

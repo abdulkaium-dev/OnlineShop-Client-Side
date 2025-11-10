@@ -10,7 +10,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const auth = getAuth();
 
-  // Listen for auth changes
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser || null);
@@ -18,7 +17,6 @@ const Navbar = () => {
     return unsubscribe;
   }, [auth]);
 
-  // Lock scroll when mobile menu open
   useEffect(() => {
     document.body.style.overflow = mobileMenuOpen ? "hidden" : "auto";
   }, [mobileMenuOpen]);
@@ -43,30 +41,28 @@ const Navbar = () => {
     { path: "/", label: "Home" },
     { path: "/products", label: "Products" },
     { path: "/newsletter", label: "Newsletter" },
-   
   ];
 
   const userLinks = [
     { path: "/", label: "Home" },
     { path: "/products", label: "Products" },
     { path: "/upcoming-products", label: "Upcoming Products" },
-    
   ];
 
   const linksToRender = user ? userLinks : guestLinks;
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-[#4F46E5] dark:bg-gray-900 shadow-md">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center gap-2 font-bold text-white dark:text-gray-100 text-base sm:text-lg"
+            className="flex items-center gap-2 font-bold text-[#111111] text-base sm:text-lg"
             onClick={closeMobileMenu}
           >
             <img
-              src="/logo.png"
+              src="https://i.ibb.co.com/b5tzGmCp/ShopEase.png"
               onError={(e) => (e.target.src = "/default-logo.png")}
               alt="Logo"
               className="w-9 h-9 md:w-10 md:h-10 rounded-lg object-contain"
@@ -83,8 +79,8 @@ const Navbar = () => {
                 onClick={closeDropdown}
                 className={({ isActive }) =>
                   isActive
-                    ? "text-[#06B6D4] border-b-2 border-[#06B6D4] pb-1 font-semibold"
-                    : "text-white dark:text-gray-100 hover:text-[#06B6D4] transition-colors duration-300"
+                    ? "text-[#FF6B6B] border-b-2 border-[#FF6B6B] pb-1 font-semibold"
+                    : "text-[#111111] hover:text-[#FF6B6B] transition-colors duration-300"
                 }
               >
                 {label}
@@ -96,10 +92,9 @@ const Navbar = () => {
           <div className="hidden md:flex items-center gap-4 relative">
             {user ? (
               <>
-                {/* Avatar Button */}
                 <button
                   onClick={toggleDropdown}
-                  className="focus:outline-none rounded-full overflow-hidden border-2 border-[#06B6D4]"
+                  className="focus:outline-none rounded-full overflow-hidden border-2 border-[#FF6B6B]"
                 >
                   <img
                     src={user.photoURL || "/default-avatar.png"}
@@ -108,15 +103,13 @@ const Navbar = () => {
                   />
                 </button>
 
-                {/* Logout Button */}
                 <button
                   onClick={handleLogout}
-                  className="bg-[#06B6D4] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#0891B2] transition"
+                  className="bg-[#FF6B6B] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#FFD93D] transition"
                 >
                   Logout
                 </button>
 
-                {/* Dropdown */}
                 <AnimatePresence>
                   {dropdownOpen && (
                     <motion.div
@@ -125,10 +118,10 @@ const Navbar = () => {
                       animate={{ opacity: 1, scale: 1, y: 8 }}
                       exit={{ opacity: 0, scale: 0.95, y: -10 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute right-0 mt-12 w-44 sm:w-48 bg-white dark:bg-gray-800 text-[#1E293B] dark:text-gray-100 rounded-md shadow-lg py-2 z-50"
+                      className="absolute right-0 mt-12 w-44 sm:w-48 bg-white text-[#111111] rounded-md shadow-lg py-2 z-50"
                       onMouseLeave={closeDropdown}
                     >
-                      <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+                      <div className="px-4 py-2 border-b border-[#FFD93D]">
                         <p className="truncate font-semibold">
                           {user.displayName || user.email}
                         </p>
@@ -136,7 +129,7 @@ const Navbar = () => {
                       <Link
                         to="/dashboard"
                         onClick={closeDropdown}
-                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                        className="block px-4 py-2 hover:bg-[#FFD93D] transition"
                       >
                         Dashboard
                       </Link>
@@ -147,7 +140,7 @@ const Navbar = () => {
             ) : (
               <Link
                 to="/join-us"
-                className="bg-[#06B6D4] text-white font-medium px-4 py-2 rounded-lg hover:bg-[#0891B2] transition"
+                className="bg-[#FF6B6B] text-white font-medium px-4 py-2 rounded-lg hover:bg-[#FFD93D] transition"
               >
                 Join Us
               </Link>
@@ -158,7 +151,7 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={toggleMobileMenu}
-              className="text-white dark:text-gray-100 focus:outline-none"
+              className="text-[#111111] focus:outline-none"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? (
@@ -204,7 +197,7 @@ const Navbar = () => {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25 }}
-            className="md:hidden bg-[#4F46E5]/95 dark:bg-gray-900 px-4 py-3 space-y-3"
+            className="md:hidden bg-white px-4 py-3 space-y-3"
           >
             {linksToRender.map(({ path, label }) => (
               <NavLink
@@ -216,8 +209,8 @@ const Navbar = () => {
                 }}
                 className={({ isActive }) =>
                   isActive
-                    ? "block text-[#06B6D4] border-b-2 border-[#06B6D4] pb-1 font-semibold"
-                    : "block text-white dark:text-gray-100 hover:text-[#06B6D4] transition-colors duration-300 py-1"
+                    ? "block text-[#FF6B6B] border-b-2 border-[#FF6B6B] pb-1 font-semibold"
+                    : "block text-[#111111] hover:text-[#FF6B6B] transition-colors duration-300 py-1"
                 }
               >
                 {label}
@@ -225,27 +218,27 @@ const Navbar = () => {
             ))}
 
             {user && (
-              <div className="border-t border-[#06B6D4] dark:border-gray-600 pt-2 space-y-2">
-                <div className="flex items-center gap-3 px-3 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-inner">
+              <div className="border-t border-[#FFD93D] pt-2 space-y-2">
+                <div className="flex items-center gap-3 px-3 py-2 bg-white rounded-lg shadow-inner">
                   <img
                     src={user.photoURL || "/default-avatar.png"}
                     alt="User Avatar"
-                    className="h-9 w-9 rounded-full object-cover border-2 border-[#06B6D4]"
+                    className="h-9 w-9 rounded-full object-cover border-2 border-[#FF6B6B]"
                   />
-                  <p className="text-[#1E293B] dark:text-gray-100 truncate font-medium">
+                  <p className="text-[#111111] truncate font-medium">
                     {user.displayName || user.email}
                   </p>
                 </div>
                 <Link
                   to="/dashboard"
                   onClick={closeMobileMenu}
-                  className="block px-3 py-2 bg-white dark:bg-gray-800 text-[#1E293B] dark:text-gray-100 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition font-medium"
+                  className="block px-3 py-2 bg-white text-[#111111] rounded-lg hover:bg-[#FFD93D] transition font-medium"
                 >
                   Dashboard
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="block w-full text-left px-3 py-2 bg-[#06B6D4] text-white rounded-lg hover:bg-[#0891B2] transition font-medium"
+                  className="block w-full text-left px-3 py-2 bg-[#FF6B6B] text-white rounded-lg hover:bg-[#FFD93D] transition font-medium"
                 >
                   Logout
                 </button>

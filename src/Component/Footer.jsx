@@ -14,7 +14,7 @@ const Footer = () => {
         <div className="flex flex-col items-center md:items-start text-center md:text-left">
           <Link to="/" className="flex items-center gap-2 mb-3">
             <img
-              src="/logo.png"
+              src="https://i.ibb.co.com/b5tzGmCp/ShopEase.png"
               onError={(e) => (e.target.src = "/default-logo.png")}
               alt="ShopEase Logo"
               className="w-10 h-10 rounded-lg object-contain border-2 border-cyan-400"
